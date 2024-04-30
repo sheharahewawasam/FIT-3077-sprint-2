@@ -35,6 +35,9 @@ def draw_board():
     spacing_width = -10  # Spacing between rhombuses
     spacing_height = 20  # Spacing between rhombuses
 
+    cave_rhombus_width = 75 # The width of each rhombus
+    cave_rhombus_height = 75  # The height of each rhombus
+
     cos_theta = math.cos(math.radians(45))
     sin_theta = math.sin(math.radians(45))
 
@@ -43,6 +46,26 @@ def draw_board():
     start_y = window_size[1] // 2.5
     start_x_inner = window_size[0] // 2
     start_y_inner = window_size[1] // 1.9
+
+    #implementation of the caves
+    user1_x = window_size[0] // 2.005
+    user2_x = window_size[0] // 1.95
+    user3_x = window_size[0] // 5
+    user4_x = window_size[0] // 1.25
+    user1_y = window_size[1] // 7.3
+    user2_y = window_size[1] // 1.1
+    user3_y = window_size[1] // 2
+    user4_y = window_size[1] // 1.9
+
+    color = ICON_COLORS['token_2'] 
+    draw_rhombus(user1_x, user1_y, cave_rhombus_width, cave_rhombus_height, color)
+    color = ICON_COLORS['token_2'] 
+    draw_rhombus(user2_x, user2_y, cave_rhombus_width, cave_rhombus_height, color)
+    color = ICON_COLORS['token_2'] 
+    draw_rhombus(user3_x, user3_y, cave_rhombus_width, cave_rhombus_height, color)
+    color = ICON_COLORS['token_2'] 
+    draw_rhombus(user4_x, user4_y, cave_rhombus_width, cave_rhombus_height, color)
+
     # Draw the rhombuses for the board
     for row in range(tiles_per_row):
         for col in range(tiles_per_row):
