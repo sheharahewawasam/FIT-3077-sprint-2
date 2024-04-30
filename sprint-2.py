@@ -9,11 +9,17 @@ ICON_COLORS = {
     'token_1': (255, 0, 0),  # Red tokens
     'token_2': (0, 255, 0),  # Green tokens
 }
-font = pygame.font.Font(None, 36)
+
+
 # Set up the display
 window_size = (824, 642)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption('Game Board')
+
+font = pygame.font.Font(None, 36)
+x_list = []
+y_list = []
+
 # Function to draw a rhombus
 def draw_rhombus(center_x, center_y, width, height, color, text=''):
     points = [
@@ -101,15 +107,40 @@ def draw_board():
             center_x_inner = int(start_x_inner + original_x_inner * cos_theta - original_y_inner * sin_theta)
             center_y_inner = int(start_y_inner + original_x_inner * sin_theta + original_y_inner * cos_theta)
             
+            x_list.append(center_x_inner)
+            y_list.append(center_y_inner)
+
             # Alternate colors based on column and row for a checkered pattern
             color = ICON_COLORS['token_1'] 
             draw_rhombus(center_x_inner, center_y_inner, rhombus_width, rhombus_height, color)
             
-    
+def handle_mouse_click(pos):
+    rhombus_width = 50
+    for i in range(len(x_list)):
+        dx, dy = pos[0] - x_list[i], pos[1] - y_list[i]
+        if dx * dx + dy * dy < (rhombus_width / 2) ** 2:  # Check if click is within the rhombus area
+            select_token(i)
+            break
+
+def select_token(index):
+    rhombus_width = 50
+    rhombus_height = 50
+    color = ICON_COLORS['token_2']  # Change to a different color on select
+    center_x, center_y = x_list[index], y_list[index]
+    draw_rhombus(center_x, center_y, rhombus_width, rhombus_height, color)
+    pygame.display.flip()
+
+# Game loop
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            handle_mouse_click(pygame.mouse.get_pos())
     screen.fill(BLACK)  # Clear the screen
+    pygame.time.wait(1000)
+    draw_board()  # Draw the game board with rhombuses
+    pygame.display.flip()
+
 pygame.quit()  # Clean up
