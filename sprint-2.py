@@ -4,6 +4,7 @@ import math
 pygame.init()
 # Define colors
 BLACK = (0, 0, 0)
+WHITE = (255,255,255)
 ICON_COLORS = {
     'token_1': (255, 0, 0),  # Red tokens
     'token_2': (0, 255, 0),  # Green tokens
@@ -26,6 +27,10 @@ def draw_rhombus(center_x, center_y, width, height, color, text=''):
         text_surface = font.render(text, True, BLACK)
         text_rect = text_surface.get_rect(center=(center_x, center_y))
         screen.blit(text_surface, text_rect)
+
+def draw_circle(center_x, center_y, radius, color):
+    pygame.draw.circle(screen, color, (center_x, center_y), radius)
+
 # Function to draw the board
 def draw_board():
     tiles_per_row = 7 # Increased size to allow for a border
@@ -59,12 +64,16 @@ def draw_board():
 
     color = ICON_COLORS['token_2'] 
     draw_rhombus(user1_x, user1_y, cave_rhombus_width, cave_rhombus_height, color)
+    draw_circle(user1_x, user1_y, 10, WHITE)
     color = ICON_COLORS['token_2'] 
     draw_rhombus(user2_x, user2_y, cave_rhombus_width, cave_rhombus_height, color)
+    draw_circle(user2_x, user2_y, 10, WHITE)
     color = ICON_COLORS['token_2'] 
     draw_rhombus(user3_x, user3_y, cave_rhombus_width, cave_rhombus_height, color)
+    draw_circle(user3_x, user3_y, 10, WHITE)
     color = ICON_COLORS['token_2'] 
     draw_rhombus(user4_x, user4_y, cave_rhombus_width, cave_rhombus_height, color)
+    draw_circle(user4_x, user4_y, 10, WHITE)
 
     # Draw the rhombuses for the board
     for row in range(tiles_per_row):
